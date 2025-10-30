@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,45 +15,52 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-const formSchema = z.object({
-  username: z.string().min(2).max(50)
-})
+import { formSchema } from './FormCreateCourse.form'
 
 const FormCreateCourse = () => {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: ''
+      courseName: '',
+      slug: ''
     }
   })
 
   // 2. Define a submit handler.
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values)
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6 mt-4'>
         <FormField
           control={form.control}
-          name='username'
+          name='courseName'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Nombre de el curso</FormLabel>
               <FormControl>
-                <Input placeholder='shadcn' {...field} />
+                <Input placeholder='Curso de ReactJS' {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type='submit'>Submit</Button>
+        <FormField
+          control={form.control}
+          name='slug'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Slug de el curso</FormLabel>
+              <FormControl>
+                <Input placeholder='curso-reactjs' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type='submit'>Crear curso</Button>
       </form>
     </Form>
   )
