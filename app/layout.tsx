@@ -26,7 +26,7 @@ export default function RootLayout ({
   return (
     <ClerkProvider>
       <html lang='en'>
-        <body className={`${spaceGrotesk.variable} antialiased`}>
+        <body className={`${spaceGrotesk.className} antialiased`}>
           <SidebarProvider>
             <Appsidebar />
             <div className='w-full bg-stone-100 flex flex-col min-h-screen'>
