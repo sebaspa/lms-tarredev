@@ -1,9 +1,11 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import axios from 'axios'
+import { toast } from "sonner"
 
 import { Button } from '@/components/ui/button'
 import {
@@ -19,6 +21,7 @@ import { Input } from '@/components/ui/input'
 import { formSchema } from './FormCreateCourse.form'
 
 const FormCreateCourse = () => {
+  const router = useRouter()
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,9 +36,12 @@ const FormCreateCourse = () => {
     console.log(values)
     try {
       const res = await axios.post('/api/course', values)
+      toast.success('Curso creado con exito')
+      router.push(`/teacher/${res.data.id}`)
       console.log(res)
     } catch (error) {
       console.error(error)
+      toast.error('Error al crear el curso')
     }
   }
   return (
