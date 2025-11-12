@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { CourseCardProps } from './CourseCard.types'
 import { ChartNoAxesColumn, DollarSign } from 'lucide-react'
+import { Actions } from './ListCourses/CourseCard'
 
 const CourseCard = (props: CourseCardProps) => {
   const { course } = props
@@ -48,6 +49,7 @@ const CourseCard = (props: CourseCardProps) => {
             </div>
           </div>
         </div>
+        <Actions courseId={id} />
       </div>
     </div>
   )
