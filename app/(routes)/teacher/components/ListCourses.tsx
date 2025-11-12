@@ -6,7 +6,7 @@ const ListCourses = (props: ListCoursesProps) => {
 
   if(courses.length === 0) {
     return (
-      <div>No hay cursos</div>
+      <div className="m-6">No hay cursos</div>
     )
   }
 

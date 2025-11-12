@@ -31,10 +31,15 @@ const Actions = (props: ActionsProps) => {
     router.push(`/teacher/${courseId}`)
   }
 
-  const deleteCourse = () => {
-    axios.delete(`/api/course/${courseId}`)
-    toast.success('Curso eliminado')
-    router.refresh()
+  const deleteCourse = async () => {
+    try {
+      await axios.delete(`/api/course/${courseId}`)
+      toast.success('Curso eliminado')
+      router.refresh()
+    } catch (error) {
+      console.error(error)
+      toast.error('Error al eliminar el curso')
+    }
   }
 
   return (
@@ -61,7 +66,9 @@ const Actions = (props: ActionsProps) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction onClick={deleteCourse}>Eliminar</AlertDialogAction>
+            <AlertDialogAction onClick={deleteCourse}>
+              Eliminar
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
