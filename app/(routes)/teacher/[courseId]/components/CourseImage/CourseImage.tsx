@@ -53,13 +53,13 @@ const CourseImage = (props: CourseImageProps) => {
           />
         </div>
       ) : (
-        <div className='w-full h-full min-h-5 bg-gray-300 rounded-md'>
+        <div className='w-full bg-gray-300 rounded-md h-[250px]'>
           <Image
             src={image || '/default-course-image.webp'}
             alt='Imagen del curso'
             width={500}
             height={250}
-            className='rounded-md w-full h-full'
+            className='rounded-md w-full h-full object-cover'
           />
         </div>
       )}
