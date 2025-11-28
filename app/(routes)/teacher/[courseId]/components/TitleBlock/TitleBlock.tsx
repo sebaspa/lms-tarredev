@@ -7,7 +7,7 @@ const TitleBlock = (props: TitleBlockProps) => {
       <div className='p-2 rounded-full bg-violet-400'>
         <Icon className='h-5 w-5 text-white' />
       </div>
-      <h3 className='text-xl font-semibold'>{title}</h3>
+      <h3 className='text-xl font-semibold ml-1'>{title}</h3>
     </div>
   )
 }
