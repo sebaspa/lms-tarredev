@@ -7,6 +7,7 @@ import TitleBlock from '../TitleBlock/TitleBlock'
 import { Button } from '@/components/ui/button'
 
 import { ChaptersBlockProps } from './ChaptersBlock.types'
+import FormChapterName from './FormChapterName'
 
 const ChaptersBlock = (props: ChaptersBlockProps) => {
   const { chapters, idCourse } = props
@@ -27,7 +28,7 @@ const ChaptersBlock = (props: ChaptersBlockProps) => {
         </Button>
       </div>
       {showInputChapter && (
-        <p>Formulario</p>
+       <FormChapterName setShowInputChapter={setShowInputChapter} idCourse={idCourse} />
       )}
     </div>
   )
