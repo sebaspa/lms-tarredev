@@ -1,7 +1,7 @@
 import { auth } from '@clerk/nextjs/server'
 import prisma from '@/lib/prisma'
 
-import { CourseForm, CourseImage, HeaderCourse } from './components'
+import { CourseForm, CourseImage, CoursePrice, HeaderCourse } from './components'
 
 const CoursePage = async ({
   params
@@ -47,6 +47,7 @@ const CoursePage = async ({
       <CourseForm course={course} />
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4 my-4'>
         <CourseImage idCourse={course.id} imageCourse={course.imageUrl} />
+        <CoursePrice idCourse={course.id} priceCourse={course.price} />
       </div>
     </div>
   )
