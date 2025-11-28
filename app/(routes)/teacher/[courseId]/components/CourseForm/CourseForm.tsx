@@ -1,10 +1,10 @@
 'use client'
 
+import axios from 'axios'
 import { z } from 'zod'
 
+import { toast } from 'sonner'
 import { Cog } from 'lucide-react'
-import TitleBlock from '../TitleBlock/TitleBlock'
-import { CourseFormProps } from './CourseForm.types'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -29,6 +29,8 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 
+import TitleBlock from '../TitleBlock/TitleBlock'
+import { CourseFormProps } from './CourseForm.types'
 import { formSchema } from './CourseForm.form'
 
 const CourseForm = (props: CourseFormProps) => {
@@ -47,9 +49,14 @@ const CourseForm = (props: CourseFormProps) => {
   })
 
   // 2. Define a submit handler.
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      axios.patch(`/api/course/${course.id}`, values)
+      toast.success('Curso actualizado')
+    } catch (error) {
+      toast.error('Error al actualizar el curso')
+      console.error(error)
+    }
     console.log(values)
   }
 
