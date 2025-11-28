@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "ayf880m0rc.ufs.sh"
+      }
+    ]
+  }
 };
 
 export default nextConfig;
