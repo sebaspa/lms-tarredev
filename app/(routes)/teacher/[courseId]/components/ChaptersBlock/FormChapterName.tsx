@@ -4,6 +4,10 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
+import { useRouter } from 'next/navigation'
+import axios from 'axios'
+import { toast } from 'sonner'
+
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -20,6 +24,7 @@ import { FormChapterNameProps } from './FormChapterName.types'
 
 const FormChapterName = (props: FormChapterNameProps) => {
   const { setShowInputChapter, idCourse } = props
+  const router = useRouter()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -31,9 +36,17 @@ const FormChapterName = (props: FormChapterNameProps) => {
 
   // 2. Define a submit handler.
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+    try {
+      axios.post(`/api/course/${idCourse}/chapter`, {
+        title: values.title
+      })
+      setShowInputChapter(false)
+      toast.success('Capitulo creado')
+      router.refresh()
+    } catch (error) {
+      console.error('[Chapter]', error)
+      toast.error('Error al crear el capitulo')
+    }
   }
 
   return (
