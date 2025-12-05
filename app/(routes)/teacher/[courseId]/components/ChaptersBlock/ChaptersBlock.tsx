@@ -11,7 +11,7 @@ import FormChapterName from './FormChapterName'
 
 const ChaptersBlock = (props: ChaptersBlockProps) => {
   const { chapters, idCourse } = props
-  const [capterList, setCapterList] = useState(chapters || [])
+  const [chapterList, setChapterList] = useState(chapters || [])
   const [showInputChapter, setShowInputChapter] = useState(false)
   return (
     <div className='p-6 bg-white rounded-md h-fit relative'>
