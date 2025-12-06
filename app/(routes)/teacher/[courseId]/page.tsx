@@ -27,7 +27,11 @@ const CoursePage = async ({
       userId
     },
     include: {
-      chapters: true
+      chapters: {
+        orderBy: {
+          position: 'asc'
+        }
+      }
     }
   })
 
