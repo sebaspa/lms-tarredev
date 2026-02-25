@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { TitleBlock } from '../../../components'
 
 import { ArrowLeft, Cog, Trash } from 'lucide-react'
+import ChapterTitleForm from './ChapterTitleForm'
 
 const ChapterForm = (props: ChapterFormProps) => {
   const { chapter, courseId } = props
@@ -25,7 +26,7 @@ const ChapterForm = (props: ChapterFormProps) => {
     )
   }
 
-  const onPlublish = async(state: boolean) => {
+  const onPlublish = async (state: boolean) => {
     try {
       axios.patch(`/api/course/${courseId}/chapter/${chapter.id}`, {
         isPublished: state
@@ -55,16 +56,11 @@ const ChapterForm = (props: ChapterFormProps) => {
         <TitleBlock title='Configuración del capítulo' icon={Cog} />
         <div className='gap-2 flex items-center'>
           {chapter.isPublished ? (
-            <Button
-              variant='outline'
-              onClick={() => onPlublish(false)}
-            >
+            <Button variant='outline' onClick={() => onPlublish(false)}>
               Ocultar
             </Button>
           ) : (
-            <Button onClick={() => onPlublish(true)}>
-              Publicar
-            </Button>
+            <Button onClick={() => onPlublish(true)}>Publicar</Button>
           )}
           <Button
             variant='destructive'
@@ -74,6 +70,7 @@ const ChapterForm = (props: ChapterFormProps) => {
           </Button>
         </div>
       </div>
+      <ChapterTitleForm chapter={chapter} courseId={courseId} />
     </div>
   )
 }
