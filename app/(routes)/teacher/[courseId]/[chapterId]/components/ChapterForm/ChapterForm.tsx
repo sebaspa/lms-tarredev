@@ -44,6 +44,17 @@ const ChapterForm = (props: ChapterFormProps) => {
     }
   }
 
+  const removeChapter = async () => {
+    try {
+      axios.delete(`/api/course/${courseId}/chapter/${chapter.id}`)
+      toast.success('Capitulo eliminado')
+      router.push(`/teacher/${courseId}`)
+    } catch (error) {
+      console.error(error)
+      toast.error('Error al eliminar el capitulo')
+    }
+  }
+
   return (
     <div>
       <div className='p-6 bg-white rounded-md'>
@@ -69,7 +80,7 @@ const ChapterForm = (props: ChapterFormProps) => {
           )}
           <Button
             variant='destructive'
-            onClick={() => console.log('Eliminar capitulo')}
+            onClick={removeChapter}
           >
             <Trash />
           </Button>
