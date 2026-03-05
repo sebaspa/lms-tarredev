@@ -34,6 +34,11 @@ export const ourFileRouter = {
     .onUploadComplete(async ({ metadata }) => {
       return { uploadedBy: metadata };
     }),
+    chapterVideo: f({
+      video: {maxFileCount: 1, maxFileSize: "1GB"}
+    }).onUploadComplete(({ file }) => {
+      return {url: file.url}
+    })
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

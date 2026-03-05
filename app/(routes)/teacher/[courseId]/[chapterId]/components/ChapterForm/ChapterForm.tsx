@@ -1,16 +1,21 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+
+import { ArrowLeft, Cog, Trash } from 'lucide-react'
+
 import axios from 'axios'
+
 import { toast } from 'sonner'
 
-import { ChapterFormProps } from './ChapterForm.types'
 
 import { Button } from '@/components/ui/button'
 import { TitleBlock } from '../../../components'
 
-import { ArrowLeft, Cog, Trash } from 'lucide-react'
 import ChapterTitleForm from './ChapterTitleForm'
+import ChapterVideoForm from './ChapterVideoForm'
+
+import { ChapterFormProps } from './ChapterForm.types'
 
 const ChapterForm = (props: ChapterFormProps) => {
   const { chapter, courseId } = props
@@ -71,6 +76,7 @@ const ChapterForm = (props: ChapterFormProps) => {
         </div>
       </div>
       <ChapterTitleForm chapter={chapter} courseId={courseId} />
+      <ChapterVideoForm chapterId={chapter.id} courseId={courseId} videoUrl={chapter.videoUrl} />
     </div>
   )
 }
