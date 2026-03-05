@@ -1,8 +1,13 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import axios from 'axios'
+
+import { toast } from 'sonner'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -26,6 +31,8 @@ import { EditorDescription } from '@/components/shared'
 const ChapterTitleForm = (props: ChapterTitleFormProps) => {
   const { courseId, chapter } = props
 
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,9 +42,15 @@ const ChapterTitleForm = (props: ChapterTitleFormProps) => {
     }
   })
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    console.log('values: ', values)
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await axios.patch(`/api/course/${courseId}/chapter/${chapter.id}`, values)
+      toast.success('Capitulo actualizado')
+      router.refresh()
+    } catch (error) {
+      console.error(error)
+      toast.error('Error al actualizar el capitulo')
+    }
   }
 
   return (
