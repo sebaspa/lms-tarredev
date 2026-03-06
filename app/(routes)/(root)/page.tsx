@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button"
+import { ExploreCourses } from "./components"
 
 const Page = () => {
   return (
     <div>
-      <Button>Button</Button>
+      <ExploreCourses />
     </div>
   )
 }
