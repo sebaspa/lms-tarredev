@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { ListCoursesProps } from './ListCourses.types'
 import Image from 'next/image'
-import { IconBadge } from '../shared'
+import { IconBadge, ProgressCourse } from '..'
 import { Book, ChartNoAxesColumn } from 'lucide-react'
 
 const ListCourses = (props: ListCoursesProps) => {
@@ -40,12 +40,22 @@ const ListCourses = (props: ListCoursesProps) => {
                     sizes='(max-width: 500px) 100vw, 1200px'
                   />
                 </div>
-                <div className="p-2">
-                  <h3 className='text-lg font-semibold text-gray-800 truncate'>{title}</h3>
-                  <div className="flex items-center gap-2 justify-between mt-2">
-                    <IconBadge icon={Book} text={`${chapters.length} capítulos`} />
+                <div className='p-2'>
+                  <h3 className='text-lg font-semibold text-gray-800 truncate'>
+                    {title}
+                  </h3>
+                  <div className='flex items-center gap-2 justify-between mt-2'>
+                    <IconBadge
+                      icon={Book}
+                      text={`${chapters.length} capítulos`}
+                    />
                     <IconBadge icon={ChartNoAxesColumn} text={level || ''} />
                   </div>
+                  <ProgressCourse
+                    courseId={id}
+                    totalChapters={chapters.length}
+                    price={price}
+                  />
                 </div>
               </Link>
             )
