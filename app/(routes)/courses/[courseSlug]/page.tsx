@@ -1,5 +1,8 @@
 import { getCourseBySlug } from '@/actions/getCourseBySlug'
-import { BreadCrumbCourse } from './components'
+import { getPurchaseCourseById } from '@/actions/getPurchaseCourseById'
+
+import { BreadCrumbCourse, CourseContent, HeroBlockCourse } from './components'
+import { currentUser } from '@clerk/nextjs/server'
 
 const PageCourse = async ({
   params
@@ -20,10 +23,30 @@ const PageCourse = async ({
     )
   }
 
+  const { id, title, chapters } = infoCourse
+
+  const user = await currentUser()
+
+  if (!user) {
+    return (
+      <div className='max-w-6xl mx-auto'>
+        <div className='my-4 mx-6 rounded-lg bg-white p-6'>
+          <p>Debes iniciar sesión para ver el curso.</p>
+        </div>
+      </div>
+    )
+  }
+
+  const purchaseCourse = await getPurchaseCourseById(user.id, id)
+
   return (
     <div className='max-w-6xl mx-auto'>
       <div className='my-4 mx-6 rounded-lg bg-white p-6'>
-        <BreadCrumbCourse title={infoCourse.title} />
+        <BreadCrumbCourse title={title} />
+        <HeroBlockCourse course={infoCourse} purchaseCourse={purchaseCourse} />
+      </div>
+      <div className="my-4 mx-6 border rounded-lg bg-white p-6">
+        <CourseContent chapters={chapters} />
       </div>
     </div>
   )
