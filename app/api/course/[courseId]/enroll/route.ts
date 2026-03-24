@@ -1,0 +1,46 @@
+import prisma from '@/lib/prisma'
+import { auth } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
+
+export async function POST (
+  req: Request,
+  { params }: { params: Promise<{ courseId: string }> }
+) {
+  const { userId } = await auth()
+
+  if (!userId) {
+    return new NextResponse('Unauthorized', { status: 401 })
+  }
+
+  const { courseId } = await params
+
+  try {
+    const existingPurchase = await prisma.purchase.findUnique({
+      where: {
+        userId_courseId: {
+          userId,
+          courseId
+        }
+      }
+    })
+
+    if (existingPurchase) {
+      return new NextResponse('You are already enrolled in this course', {
+        status: 400
+      })
+    }
+
+    await prisma.purchase.create({
+      data: {
+        userId,
+        courseId,
+        price: 0
+      }
+    })
+
+    return new Response('Successfully enrolled in course', { status: 200 })
+  } catch (error) {
+    console.error('[ENROLL]', error)
+    return new NextResponse('Internal Error', { status: 500 })
+  }
+}

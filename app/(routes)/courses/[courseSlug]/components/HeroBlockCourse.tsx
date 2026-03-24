@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import { Calendar, Timer } from 'lucide-react'
+import { Calendar, ChartNoAxesColumn, Timer } from 'lucide-react'
 
 import { IconBadge } from '@/components/shared'
 
@@ -11,6 +11,8 @@ import { formatPrice } from '@/lib/formatPrice'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import axios from 'axios'
+import { toast } from 'sonner'
 
 const HeroBlockCourse = (props: HeroBlockCourseProps) => {
   const { course, purchaseCourse } = props
@@ -29,7 +31,20 @@ const HeroBlockCourse = (props: HeroBlockCourseProps) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const enrollCourse = async () => {
-    console.log('Enroll course')
+    setIsLoading(true)
+    // Check if course is free (price is 0 or null)
+    if (!price) {
+      try {
+        await axios.post(`/api/course/${id}/enroll`)
+        toast.success('Curso comprado con exito')
+        router.push(`/courses/${slug}/${chapters[0].id}`)
+      } catch (error) {
+        toast.error('Error al comprar el curso')
+        console.error(error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
   }
 
   const redirectToCourse = () => {
@@ -49,6 +64,7 @@ const HeroBlockCourse = (props: HeroBlockCourseProps) => {
               updatedAt
             ).toLocaleDateString('es-CO')}`}
           />
+          <IconBadge icon={ChartNoAxesColumn} text={level || ''} />
         </div>
         <h2 className='text-xl font-semibold my-4'>{formatPrice(price)}</h2>
         {purchaseCourse ? (
