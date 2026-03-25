@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 
@@ -28,13 +28,11 @@ import { toast } from 'sonner'
 const ChaptersBlock = (props: ChaptersBlockProps) => {
   const { chapters, idCourse } = props
   const router = useRouter()
-  const [chapterList, setChapterList] = useState(chapters || [])
   const [showInputChapter, setShowInputChapter] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
 
-  useEffect(() => {
-    setChapterList(chapters ?? [])
-  }, [chapters])
+  // Derived state: compute during render instead of useEffect
+  const chapterList = chapters || []
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return
@@ -42,8 +40,6 @@ const ChaptersBlock = (props: ChaptersBlockProps) => {
     const items = Array.from(chapterList)
     const [reorderedItem] = items.splice(result.source.index, 1)
     items.splice(result.destination.index, 0, reorderedItem)
-
-    setChapterList(items)
 
     const bultUpdate = items.map((chapter, index) => {
       return {
@@ -140,8 +136,16 @@ const ChaptersBlock = (props: ChaptersBlockProps) => {
                           </p>
                         )}
                         <div
+                          role='button'
+                          tabIndex={0}
                           className='cursor-pointer'
                           onClick={() => onEditChapter(chapter.id)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault()
+                              onEditChapter(chapter.id)
+                            }
+                          }}
                         >
                           <Pencil className='w-4 h-4 text-gray-500' />
                         </div>
