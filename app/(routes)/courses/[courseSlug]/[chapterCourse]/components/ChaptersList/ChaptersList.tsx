@@ -1,21 +1,37 @@
-import Link from "next/link"
-import { ChaptersListProps } from "./ChaptersList.types"
-import { Eye } from "lucide-react"
+import Link from 'next/link'
+import { ChaptersListProps } from './ChaptersList.types'
+import { Eye, Lock } from 'lucide-react'
 
 const ChaptersList = (props: ChaptersListProps) => {
   const { chapters, courseSlug, currentChapter, userProgress } = props
 
-  if(!chapters) return null
+  if (!chapters) return null
 
   return (
-    <div className="grid gap-4">
-      {chapters.map((chapter) => {
-
+    <div className='grid gap-4'>
+      {chapters.map(chapter => {
+        const isCurrent = chapter.id === currentChapter
+        const isCompleted = userProgress.some(
+          userProgress =>
+            userProgress.chapterId === chapter.id && userProgress.isCompleted
+        )
         return (
-          <Link href={`/courses/${courseSlug}/${chapter.id}`} key={chapter.id} className="flex items-center justify-between border-gray-200 rounded-md transition-all duration-300">
-            <div className="flex items-center gap-2 border shadow-md w-full justify-between rounded-md p-2">
+          <Link
+            href={`/courses/${courseSlug}/${chapter.id}`}
+            key={chapter.id}
+            className={`flex items-center justify-between border-gray-200 rounded-md transition-all duration-300 ${
+              isCurrent
+                ? 'bg-violet-400 text-white'
+                : 'hover:bg-violet-200 hover:shadow-lg'
+            }`}
+          >
+            <div className='flex items-center gap-2 border shadow-md w-full justify-between rounded-md p-2'>
               <span>{chapter.title}</span>
-              <Eye className="w-4 h-4" />
+              {isCompleted ? (
+                <Eye className='w-4 h-4 shrink-0' />
+              ) : (
+                <Lock className='w-4 h-4 shrink-0' />
+              )}
             </div>
           </Link>
         )
