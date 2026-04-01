@@ -1,12 +1,13 @@
 import { Progress } from "@/components/ui/progress";
 import { CourseProgressDisplayProps } from "./CourseProgressDisplay.types"
+import DownloadCertificate from "../DownloadCertificate/DownloadCertificate";
 
 const CourseProgressDisplay = (props: CourseProgressDisplayProps) => {
   const { progress, titleCourse, userName } = props
   const showProgress = progress === 100;
 
   return showProgress ? (
-    <div>Download certificate</div>
+    <DownloadCertificate userName={userName} titleCourse={titleCourse} />
   ) : (
     <>
     <Progress value={progress} className="*:bg-violet-300" />

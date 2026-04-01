@@ -12,7 +12,7 @@ const CertificatesPage = async() => {
     return <p>Not signed in</p>
   }
 
-  const userName = `${user.firstName} ${user.lastName}`
+  const userName = `${user.firstName} ${user.lastName ? user.lastName : ''}`
 
   if(!courses) {
     return <p>No courses found</p>
