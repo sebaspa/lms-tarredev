@@ -1,4 +1,4 @@
-import { SuscriptorsChart, TotalRevenue } from "./components"
+import { Payments, SuscriptorsChart, TotalRevenue } from "./components"
 
 const AnalyticsPage = () => {
   return (
@@ -7,6 +7,7 @@ const AnalyticsPage = () => {
         <SuscriptorsChart />
         <TotalRevenue />
       </div>
+      <Payments />
     </div>
   )
 }
