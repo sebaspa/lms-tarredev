@@ -1,4 +1,4 @@
-import { Award, BookOpen, ChartArea, GraduationCap, House, ReceiptText, Settings2, SquareTerminal } from 'lucide-react'
+import { Award, BookOpen, ChartArea, GraduationCap, House, ReceiptText, SquareTerminal } from 'lucide-react'
 
 export const routes = [
   {

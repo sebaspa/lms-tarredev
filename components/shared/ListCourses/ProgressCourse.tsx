@@ -2,8 +2,6 @@
 
 import { formatPrice } from '@/lib/formatPrice'
 
-import { getUserProgressByCourse } from '@/actions/getUserProgressByCourse'
-
 import { Progress } from '@/components/ui/progress'
 
 import { ProgressCourseProps } from './ProgressCourse.types'
